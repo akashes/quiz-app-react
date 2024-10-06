@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './Quiz.css'
 import { data } from '../../assets/data'
 import TimeBar from '../TimeBar'
+
 const Quiz = () => {
   const [index, setIndex] = useState(0)
   const [questions, setQuestions] = useState(data[index])
@@ -9,6 +10,7 @@ const Quiz = () => {
   const[showResult,setShowResult]=useState(false)
   const[resetTimer,setResetTimer]=useState(false)
   const[points,setPoints]=useState(0)
+  const[quizStarted,setQuizStarted]=useState(false)
 
   let option1=useRef(null)
   let option2=useRef(null)
@@ -87,27 +89,30 @@ const Quiz = () => {
   },[index])
 
   return (
-    <div className='container'>
-      {/* <TimeBar timerCompleted={timerCompleted} resetTimer={resetTimer}/> */}
+    <div style={{minHeight:'50vh'}} className='container'>
  
     <h1>Quiz App</h1>
       <hr />
       {
-        showResult? <>
-        <h2>YOU SCORED {points} OUT OF {data?.length}</h2>
-        <button onClick={handleReset} >Play Again</button>
-        
-        </> :<>
-        <h2>{index+1}.{questions.question}</h2>
-      <ul>
-        <li ref={option1} onClick={ disableClick? null: (e)=>checkAns(e,1,questions.ans)}>{questions.option1}</li>
-        <li  ref={option2}  onClick={ disableClick? null: (e)=>checkAns(e,2,questions.ans)}>{questions.option2}</li>
-        <li ref={option3}  onClick={ disableClick? null: (e)=>checkAns(e,3,questions.ans)}>{questions.option3}</li>
-        <li ref={option4}  onClick={ disableClick? null: (e)=>checkAns(e,4,questions.ans)}>{questions.option4}</li>
-      </ul>
-      <button onClick={handleChangeQuestion}>Next</button>
-      <div className="index">{index+1} of {data.length} questions</div></>
- 
+        quizStarted ? <>{
+          showResult? <>
+          <h2>YOU SCORED {points} OUT OF {data?.length}</h2>
+          <button onClick={handleReset} >Play Again</button>
+          
+          </> :<>
+          <h2>{index+1}.{questions.question}</h2>
+          <TimeBar timerCompleted={timerCompleted} resetTimer={resetTimer}/>
+
+        <ul>
+          <li ref={option1} onClick={ disableClick? null: (e)=>checkAns(e,1,questions.ans)}>{questions.option1}</li>
+          <li  ref={option2}  onClick={ disableClick? null: (e)=>checkAns(e,2,questions.ans)}>{questions.option2}</li>
+          <li ref={option3}  onClick={ disableClick? null: (e)=>checkAns(e,3,questions.ans)}>{questions.option3}</li>
+          <li ref={option4}  onClick={ disableClick? null: (e)=>checkAns(e,4,questions.ans)}>{questions.option4}</li>
+        </ul>
+        <button onClick={handleChangeQuestion}>Next</button>
+        <div className="index">{index+1} of {data.length} questions</div></>
+   
+        }</> : <> <div style={{textAlign:'center'}}> <button style={{textAlign:'center'}} onClick={()=>setQuizStarted(true)}>Start Quiz</button> </div> </>
       }
      
 

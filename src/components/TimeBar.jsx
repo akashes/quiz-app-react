@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const TimeBar = ({timerCompleted,resetTimer}) => {
-    console.log(resetTimer)
+    // console.log(resetTimer)
   const [timeLeft, setTimeLeft] = useState(10); // Total time in seconds
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const TimeBar = ({timerCompleted,resetTimer}) => {
           borderRadius:'20px'
         }}
       ></div>
-      <p style={{textAlign:'center' , fontWeight:'normal', color:'gray'}}>      {timeLeft}
+      <p style={{textAlign:'center' , fontWeight:'normal', color:'red'}}>      {timeLeft}
       </p>
     </div>
   );
